@@ -47,6 +47,7 @@ def upload_file():
         if not os.path.exists(os.path.join(rootdir, email,file.filename )):
             file.save(os.path.join(rootdir, email, file.filename))
             return Response("ok", status=200) 
+        return Response("file already exist", status=404) 
     
 if __name__ == '__main__':
     app.run(debug=False, host="0.0.0.0", port=5674)
