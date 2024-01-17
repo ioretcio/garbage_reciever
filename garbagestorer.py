@@ -2,11 +2,28 @@ from flask import Flask, request, Response, send_file,  make_response
 import os
 import requests
 import json
-
+import logging
 app = Flask(__name__)
 app.config["DEBUG"] = False
 url = "http://194.35.13.94:5000/getmail"
 rootdir = "/srv/ftp/mediastorage"
+log_file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'service.log')
+print(log_file_path)
+
+if not os.path.exists(log_file_path):
+    open(log_file_path, 'w').close()
+
+
+
+logging.basicConfig(filename=log_file_path, filemode='a', format='%(asctime)s - %(message)s', level=logging.INFO)
+
+
+def printLog(text):
+    logging.info(text)
+
+printLog("Starting service")
+
+
 
 @app.route('/sendMedia', methods=['POST'])
 def upload_file():
